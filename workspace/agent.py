@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+miniagent - a tiny local file agent driven by a GGUF model.
 
 The LLM decides what to do each turn by emitting ONE JSON action:
     {"action": "list_dir",   "path": "."}
@@ -113,7 +114,7 @@ class Workspace:
 # UI helpers
 # --------------------------------------------------------------------------- #
 def banner(model_name: str, workspace: Path) -> None:
-    title = Text("MiniAgent - (Trial for SIH)", style="bold magenta", justify="center")
+    title = Text("MINI AGENT", style="bold magenta", justify="center")
     body = Text.assemble(
         ("model      ", "dim"), (f"{model_name}\n", "cyan"),
         ("workspace  ", "dim"), (f"{workspace}\n", "cyan"),
@@ -160,7 +161,7 @@ class Agent:
             messages=self.history,
             grammar=self.grammar,
             temperature=0.2,
-            max_tokens=5000,
+            max_tokens=1024,
         )
         raw = out["choices"][0]["message"]["content"]
         self.history.append({"role": "assistant", "content": raw})
